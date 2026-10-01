@@ -1,0 +1,77 @@
+{
+  "manifest_version": 3,
+  "name": "ApplyKit — Job Application Autofill & Quick-Copy",
+  "version": "1.0.0",
+  "description": "Fill your profile once. Quick-copy URLs with 1 click or shortcuts, and safely autofill job application fields.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ApplyKit — Autofill & Quick-Copy",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "clipboardWrite",
+    "activeTab",
+    "scripting"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "file://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "toggle-floating-panel": {
+      "suggested_key": {
+        "default": "Alt+A",
+        "mac": "Alt+A"
+      },
+      "description": "Toggle ApplyKit In-Page Floating Window"
+    },
+    "copy-linkedin": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "Command+Shift+L"
+      },
+      "description": "Quick copy LinkedIn URL to clipboard"
+    },
+    "copy-github": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+G",
+        "mac": "Command+Shift+G"
+      },
+      "description": "Quick copy GitHub URL to clipboard"
+    },
+    "copy-leetcode": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+C",
+        "mac": "Command+Shift+C"
+      },
+      "description": "Quick copy LeetCode URL to clipboard"
+    },
+    "copy-portfolio": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+P",
+        "mac": "Command+Shift+P"
+      },
+      "description": "Quick copy Portfolio URL to clipboard"
+    }
+  }
+}

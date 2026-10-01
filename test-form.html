@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acme Corp — Senior Software Engineer Application (ApplyKit Test Form)</title>
+  <style>
+    :root {
+      --bg: #09090b;
+      --card-bg: #18181b;
+      --border: #27272a;
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --brand: #6366f1;
+      --brand-hover: #4f46e5;
+      --danger: #ef4444;
+      --success: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .header-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .company-tag {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--brand);
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .job-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 16px;
+    }
+
+    .form-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 24px 0 16px 0;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      color: #fff;
+    }
+
+    .section-title:first-of-type {
+      margin-top: 0;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #e4e4e7;
+    }
+
+    label span.required {
+      color: var(--danger);
+    }
+
+    .helper-text {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 14px;
+      background: #121214;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--brand);
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+    }
+
+    .sensitive-box {
+      background: rgba(239, 68, 68, 0.05);
+      border: 1px dashed rgba(239, 68, 68, 0.3);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 20px;
+    }
+
+    .sensitive-box h4 {
+      font-size: 13px;
+      color: #f87171;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .checkbox-group input {
+      margin-top: 3px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--brand);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 28px;
+      transition: background 0.15s;
+    }
+
+    .submit-btn:hover {
+      background: var(--brand-hover);
+    }
+
+    /* Verification Status Banner */
+    .status-panel {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #18181b;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 12px;
+      z-index: 9999;
+      width: 340px;
+    }
+
+    .status-panel h3 {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .status-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    .submit-log {
+      padding: 8px;
+      background: #09090b;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 11px;
+      margin-top: 8px;
+    }
+
+    .submit-log.safe {
+      color: var(--success);
+    }
+
+    .submit-log.danger {
+      color: var(--danger);
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header-card">
+      <div class="company-tag">Acme Corporation · Engineering</div>
+      <h1>Senior Full-Stack Engineer</h1>
+      <div class="job-meta">
+        <span>📍 San Francisco, CA (Hybrid / Remote)</span>
+        <span>💼 Full-Time</span>
+        <span>💰 Competitive</span>
+      </div>
+
+      <div class="job-description" style="margin-top: 16px; padding: 16px; background: #121214; border: 1px solid var(--border); border-radius: 8px; font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+        <h3 style="color: #fff; font-size: 14px; margin-bottom: 8px;">About the Role</h3>
+        <p style="margin-bottom: 12px;">We are seeking an experienced Senior Full-Stack Engineer to lead the architecture and development of our web applications and distributed cloud services.</p>
+        
+        <h4 style="color: #fff; font-size: 13px; margin-bottom: 6px;">Key Requirements</h4>
+        <ul style="padding-left: 20px; margin-bottom: 12px;">
+          <li>5+ years of experience with TypeScript and modern JavaScript (ES6+).</li>
+          <li>Deep expertise in React, Next.js, and state management.</li>
+          <li>Proficiency in Node.js backend services and PostgreSQL database design.</li>
+          <li>Experience with Docker containerization and CI/CD pipelines.</li>
+          <li>Familiarity with AWS cloud services (S3, Lambda, EC2).</li>
+        </ul>
+
+        <h4 style="color: #fff; font-size: 13px; margin-bottom: 6px;">Nice to Have</h4>
+        <ul style="padding-left: 20px;">
+          <li>Experience with GraphQL and Apollo Client.</li>
+          <li>Knowledge of Kubernetes and microservices architecture.</li>
+          <li>Contributions to open-source software on GitHub.</li>
+        </ul>
+      </div>
+    </div>
+
+    <form id="job-application-form" class="form-card" onsubmit="return handleFormSubmit(event)">
+      
+      <!-- Personal Information -->
+      <div class="section-title">1. Personal Information</div>
+
+      <div class="form-group">
+        <label for="full_name">Full Name <span class="required">*</span></label>
+        <input type="text" id="full_name" name="full_name" placeholder="First and last name" autocomplete="name" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">Email Address <span class="required">*</span></label>
+          <input type="email" id="email" name="email" placeholder="you@domain.com" autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number <span class="required">*</span></label>
+          <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" autocomplete="tel" />
+        </div>
+      </div>
+
+      <!-- Online Profiles -->
+      <div class="section-title">2. Profiles & Online Presence</div>
+
+      <div class="form-group">
+        <label for="linkedin_url">LinkedIn Profile URL <span class="required">*</span></label>
+        <input type="url" id="linkedin_url" name="linkedin_url" placeholder="https://linkedin.com/in/..." />
+        <div class="helper-text">Your primary professional profile</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="github_url">GitHub Profile</label>
+          <input type="url" id="github_url" name="github_url" placeholder="https://github.com/..." />
+        </div>
+        <div class="form-group">
+          <label for="leetcode_url">LeetCode Profile</label>
+          <input type="url" id="leetcode_url" name="leetcode_url" placeholder="https://leetcode.com/..." />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="portfolio_website">Portfolio Website</label>
+        <input type="url" id="portfolio_website" name="portfolio_website" placeholder="https://yourportfolio.dev" />
+      </div>
+
+      <!-- Education -->
+      <div class="section-title">3. Education</div>
+
+      <div class="form-group">
+        <label for="college">College / University <span class="required">*</span></label>
+        <input type="text" id="college" name="college" placeholder="Name of institution" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="degree">Degree</label>
+          <input type="text" id="degree" name="degree" placeholder="e.g. B.S. Computer Science" />
+        </div>
+        <div class="form-group">
+          <label for="grad_year">Graduation Year</label>
+          <input type="text" id="grad_year" name="grad_year" placeholder="e.g. 2024" />
+        </div>
+      </div>
+
+      <!-- Skills & Summary -->
+      <div class="section-title">4. Skills & Summary</div>
+
+      <div class="form-group">
+        <label for="skills">Key Skills & Technologies</label>
+        <input type="text" id="skills" name="skills" placeholder="e.g. React, TypeScript, Node.js, Python" />
+      </div>
+
+      <div class="form-group">
+        <label for="summary">Professional Summary</label>
+        <textarea id="summary" name="summary" rows="3" placeholder="Tell us about yourself and what you're looking for..."></textarea>
+      </div>
+
+      <!-- Sensitive / Safety Zone (Must NOT be auto-filled by ApplyKit) -->
+      <div class="sensitive-box">
+        <h4>⚠️ Sensitive Compliance Section (ApplyKit Exclusion Test)</h4>
+        <p class="helper-text" style="color: #fca5a5; margin-bottom: 12px;">
+          ApplyKit safety guards must automatically reject and never fill these fields.
+        </p>
+
+        <div class="form-group">
+          <label for="work_auth">Are you legally authorized to work in the United States?</label>
+          <select id="work_auth" name="work_auth">
+            <option value="">Select an option</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="salary_expectations">Expected Annual Salary (USD)</label>
+          <input type="text" id="salary_expectations" name="salary_expectations" placeholder="$150,000" />
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="legal_agree" name="legal_agree" />
+          <label for="legal_agree">
+            I certify that all information submitted is true and complete to the best of my knowledge under penalty of perjury.
+          </label>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" id="submit_application_btn" class="submit-btn">
+        Submit Application
+      </button>
+    </form>
+  </div>
+
+  <!-- Verification Panel -->
+  <div class="status-panel">
+    <h3>
+      <span>ApplyKit Test Harness</span>
+      <span class="status-indicator"></span>
+    </h3>
+    <p style="color: var(--text-muted); font-size: 11px; margin-bottom: 6px;">
+      Use this page to verify ApplyKit autofill and safety guards.
+    </p>
+
+    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+      <button type="button" onclick="checkFieldFillStatus()" style="flex: 1; padding: 6px; font-size: 11px; background: #27272a; color: #fff; border: 1px solid #3f3f46; border-radius: 6px; cursor: pointer;">
+        Inspect Fields
+      </button>
+      <button type="button" onclick="resetFormFields()" style="flex: 1; padding: 6px; font-size: 11px; background: #27272a; color: #fff; border: 1px solid #3f3f46; border-radius: 6px; cursor: pointer;">
+        Clear All
+      </button>
+    </div>
+
+    <div id="status-display" class="submit-log safe">
+      Submit status: UNTOUCHED ✓
+    </div>
+    <div id="fields-display" style="font-size: 10px; color: var(--text-muted); margin-top: 6px; max-height: 120px; overflow-y: auto;">
+      Fill status: 0/10 fields filled
+    </div>
+  </div>
+
+  <script>
+    let submitClicked = false;
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      submitClicked = true;
+      const statusEl = document.getElementById('status-display');
+      statusEl.className = 'submit-log danger';
+      statusEl.textContent = '❌ CRITICAL: Form was submitted!';
+      alert('WARNING: Form submit handler was triggered!');
+      return false;
+    }
+
+    function checkFieldFillStatus() {
+      const ids = [
+        'full_name', 'email', 'phone', 'linkedin_url',
+        'github_url', 'leetcode_url', 'portfolio_website',
+        'college', 'degree', 'grad_year', 'skills', 'summary'
+      ];
+
+      let filled = 0;
+      const details = [];
+
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.value.trim().length > 0) {
+          filled++;
+          details.push(`✓ ${id}: "${el.value.slice(0, 16)}..."`);
+        } else {
+          details.push(`✗ ${id}: empty`);
+        }
+      });
+
+      // Check sensitive fields
+      const sensitiveAuth = document.getElementById('work_auth').value;
+      const sensitiveSalary = document.getElementById('salary_expectations').value;
+      const sensitiveLegal = document.getElementById('legal_agree').checked;
+
+      const sensitiveClean = !sensitiveAuth && !sensitiveSalary && !sensitiveLegal;
+
+      const fieldsDisp = document.getElementById('fields-display');
+      fieldsDisp.innerHTML = `
+        <strong>${filled}/${ids.length} fields filled</strong><br/>
+        Safety compliance: ${sensitiveClean ? '✅ PASS (No sensitive fields touched)' : '❌ FAIL (Sensitive fields touched!)'}<br/>
+        ${details.join('<br/>')}
+      `;
+
+      const statusEl = document.getElementById('status-display');
+      if (!submitClicked) {
+        statusEl.className = 'submit-log safe';
+        statusEl.textContent = 'Submit button: UNTOUCHED ✓ (Safe)';
+      }
+    }
+
+    function resetFormFields() {
+      document.getElementById('job-application-form').reset();
+      submitClicked = false;
+      document.getElementById('status-display').className = 'submit-log safe';
+      document.getElementById('status-display').textContent = 'Submit status: UNTOUCHED ✓';
+      document.getElementById('fields-display').textContent = 'Fill status: 0/10 fields filled';
+    }
+
+    // Monitor changes automatically
+    document.getElementById('job-application-form').addEventListener('input', checkFieldFillStatus);
+    document.getElementById('job-application-form').addEventListener('change', checkFieldFillStatus);
+  </script>
+  <!-- ApplyKit in-page content script for dev testing -->
+  <script type="module" src="/src/content/content.ts"></script>
+</body>
+</html>
