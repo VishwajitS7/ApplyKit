@@ -9,7 +9,9 @@
     "package": "vite build && powershell -Command \"Compress-Archive -Path dist\\* -DestinationPath applykit-v1.0.0.zip -Force\"",
     "test": "vitest run",
     "test:watch": "vitest",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy:firebase": "vite build && npx -y firebase-tools deploy --only hosting",
+    "deploy:vercel": "vite build && npx -y vercel --prod"
   },
   "dependencies": {
     "clsx": "^2.1.1",
