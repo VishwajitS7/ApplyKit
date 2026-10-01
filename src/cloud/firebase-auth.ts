@@ -73,6 +73,9 @@ class FirebaseAuthService {
     // 1. Check local storage
     try {
       const raw = await this.getStorageItem(STORAGE_KEY_CONFIG);
+      if (raw === 'cleared') {
+        return null;
+      }
       if (raw) {
         return JSON.parse(raw);
       }
@@ -104,7 +107,7 @@ class FirebaseAuthService {
       await this.setStorageItem(STORAGE_KEY_CONFIG, JSON.stringify(config));
       await this.init(config);
     } else {
-      await this.setStorageItem(STORAGE_KEY_CONFIG, null);
+      await this.setStorageItem(STORAGE_KEY_CONFIG, 'cleared');
       this.app = null;
       this.auth = null;
       this.isInitialized = false;
